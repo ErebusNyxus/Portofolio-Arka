@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Modern - Minimalis</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navbar Kanan Atas */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .moon-icon {
+            color: #f0f0f0;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .navbar a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar a:hover {
+            color: #fff;
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #fff;
+            transition: width 0.3s ease;
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
+        /* Burger Menu dengan 2 Garis */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 18px;
+            cursor: pointer;
+            z-index: 1001;
+            position: relative;
+        }
+
+        .burger-line {
+            width: 100%;
+            height: 2px;
+            background-color: #f0f0f0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .burger-menu.active .burger-line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .burger-menu.active .burger-line:nth-child(2) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Mobile Menu - Animasi dari kanan ke kiri */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transition: right 0.4s ease;
+            z-index: 1000;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.4s ease;
+        }
+
+        .mobile-menu.active a {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu a:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu a:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu a:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-menu a:nth-child(5) { transition-delay: 0.5s; }
+        .mobile-menu a:nth-child(6) { transition-delay: 0.6s; }
+
+        .mobile-menu a:hover {
+            color: #fff;
+        }
+
+        /* Social Sidebar dengan Position Absolute */
+        .social-sidebar {
+            position: absolute;
+            top: 50%;
+            left: 30px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .social-sidebar a {
+            color: #f0f0f0;
+            font-size: 1.4rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Warna hover untuk setiap sosial media */
+        .social-sidebar a:nth-child(2):hover { /* GitHub */
+            color: #fff;
+            background-color: #333;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(51, 51, 51, 0.4);
+        }
+
+        .social-sidebar a:nth-child(3):hover { /* LinkedIn */
+            color: #fff;
+            background-color: #0077b5;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 119, 181, 0.4);
+        }
+
+        .social-sidebar a:nth-child(4):hover { /* Twitter */
+            color: #fff;
+            background-color: #1da1f2;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(29, 161, 242, 0.4);
+        }
+
+        .social-sidebar a:nth-child(5):hover { /* Instagram */
+            color: #fff;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(220, 39, 67, 0.4);
+        }
+
+        .social-sidebar .line {
+            width: 1px;
+            height: 120px;
+            background: linear-gradient(to bottom, transparent, #f0f0f0, transparent);
+        }
+
+        /* Hero Section di Kanan */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 5rem 0 8rem;
+            max-width: 1400px;
+            margin-left: auto;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: right;
+            max-width: 700px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #ccc;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .hero-content p {
+            margin-bottom: 3rem;
+            color: #aaa;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Skills Icons */
+        .skills-icons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .skill-icon {
+            color: #f0f0f0;
+            font-size: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-icon:hover {
+            color: #fff;
+            transform: translateY(-5px);
+        }
+
+        /* About Section */
+        .about-section {
+            min-height: 100vh;
+            padding: 100px 2rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            color: #aaa;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .about-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B4513, #1E90FF, #FF69B4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* My Works Section */
+        .works-section {
+            min-height: 100vh;
+            padding: 100px 2rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .works-content {
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin: 2rem auto 3rem;
+            max-width: 500px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #f0f0f0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .search-bar::placeholder {
+            color: #aaa;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #f0f0f0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Works Grid */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .project-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, #8B4513, #1E90FF, #FF69B4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-item:hover .project-image::before {
+            opacity: 1;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-category {
+            color: #fff;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .project-title {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: rgba(30, 30, 30, 0.95);
+            border-radius: 20px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+            transform: scale(0.7);
+            transition: transform 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #8B4513, #1E90FF, #FF69B4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #fff;
+        }
+
+        .modal-info {
+            padding: 2rem;
+        }
+
+        .modal-category {
+            color: #fff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .modal-title {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-caption {
+            color: #aaa;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 2001;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* Projects Section */
+        .projects-section {
+            min-height: 100vh;
+            padding: 100px 2rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .projects-content {
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Projects Flex Cards */
+        .projects-flex-cards {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .project-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-card-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #fff;
+        }
+
+        .project-card-info {
+            padding: 1.5rem;
+        }
+
+        .project-card-category {
+            color: #fff;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .project-card-title {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .project-card-description {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .project-card-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-card-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .project-card-link:hover {
+            color: #ccc;
+        }
+
+        /* Warna untuk project cards */
+        .card-animals .project-card-image { background: #8B4513; }
+        .card-scenery .project-card-image { background: #1E90FF; }
+        .card-games .project-card-image { background: #32CD32; }
+
+        /* Ikon untuk project cards */
+        .card-animals .project-card-image::after { content: '🐾'; }
+        .card-scenery .project-card-image::after { content: '🏞️'; }
+        .card-games .project-card-image::after { content: '🎮'; }
+
+        /* Responsif */
+        @media (max-width: 1200px) {
+            .hero {
+                padding: 0 4rem 0 6rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .about-section, .works-section, .projects-section {
+                padding: 100px 3rem 2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero, .about-section, .works-section, .projects-section {
+                padding: 100px 3rem 2rem;
+                justify-content: center;
+                margin-left: 0;
+                text-align: center;
+            }
+            
+            .hero-content, .works-content, .projects-content {
+                text-align: center;
+                max-width: 800px;
+            }
+            
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .skills-icons {
+                justify-content: center;
+                margin-left: 0;
+            }
+
+            .social-sidebar {
+                left: 20px;
+            }
+
+            .about-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .about-text h2 {
+                font-size: 2.5rem;
+            }
+
+            .profile-image {
+                width: 280px;
+                height: 280px;
+                font-size: 4rem;
+            }
+
+            .works-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .projects-flex-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .project-card {
+                max-width: 500px;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .modal-image {
+                height: 300px;
+            }
+
+            .modal-title {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .navbar ul {
+                display: none;
+            }
+            
+            .burger-menu {
+                display: flex;
+            }
+            
+            .social-sidebar {
+                left: 15px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.3rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .social-sidebar {
+                display: none;
+            }
+
+            .about-text h2 {
+                font-size: 2.2rem;
+            }
+
+            .profile-image {
+                width: 250px;
+                height: 250px;
+                font-size: 3.5rem;
+            }
+
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+
+            .modal-image {
+                height: 250px;
+                font-size: 3rem;
+            }
+
+            .modal-info {
+                padding: 1.5rem;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .modal-caption {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .hero, .about-section, .works-section, .projects-section {
+                padding: 100px 1.5rem 2rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.1rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .skills-icons {
+                gap: 1.5rem;
+            }
+            
+            .skill-icon {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 2rem;
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-text h2 {
+                font-size: 2rem;
+            }
+
+            .about-text p {
+                font-size: 1rem;
+            }
+
+            .profile-image {
+                width: 200px;
+                height: 200px;
+                font-size: 3rem;
+            }
+
+            .project-card {
+                min-width: 100%;
+            }
+
+            .modal-content {
+                width: 98%;
+                border-radius: 15px;
+            }
+
+            .modal-image {
+                height: 200px;
+            }
+
+            .modal-info {
+                padding: 1rem;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+
+            .modal-caption {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .navbar ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .about-text h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animasi teks */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content > * {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .hero-content h1 {
+            animation-delay: 0.1s;
+        }
+
+        .hero-content h2 {
+            animation-delay: 0.3s;
+        }
+
+        .hero-content p {
+            animation-delay: 0.5s;
+        }
+
+        .btn {
+            animation-delay: 0.7s;
+        }
+
+        .skills-icons {
+            animation-delay: 0.9s;
+        }
+
+        .home {
+            background-image: url('/BG\ Arka.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar Kanan Atas -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fas fa-moon moon-icon"></i>
+        </div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#my-works">My Works</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="burger-menu" id="burgerMenu">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#my-works">My Works</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-image" id="modalImage"></div>
+            <div class="modal-info">
+                <div class="modal-category" id="modalCategory"></div>
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-caption" id="modalCaption"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="home" id="home">
+        <!-- Social Sidebar dengan Position Absolute -->
+        <div class="social-sidebar">
+            <div class="line"></div>
+            <a href="https://github.com/" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://twitter.com/" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <div class="line"></div>
+        </div>
+
+        <!-- Hero Section di Kanan -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>John Doe</h1>
+                <h2>Full Stack Developer & UI/UX Designer</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <a href="#projects" class="btn">View My Work</a>
+                
+                <div class="skills-icons">
+                    <i class="fab fa-html5 skill-icon" title="HTML5"></i>
+                    <i class="fab fa-css3-alt skill-icon" title="CSS3"></i>
+                    <i class="fab fa-js skill-icon" title="JavaScript"></i>
+                    <i class="fab fa-react skill-icon" title="React"></i>
+                    <i class="fab fa-node-js skill-icon" title="Node.js"></i>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About Me</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
+        </div>
+        <div class="about-image">
+            <div class="profile-image">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Works Section -->
+    <section class="works-section" id="my-works">
+        <div class="works-content">
+            <h2 class="section-title">My Works</h2>
+            
+            <!-- Search Bar di Tengah -->
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search works..." id="searchInput">
+            </div>
+
+            <!-- Filter Buttons di Tengah -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="animals">Animals</button>
+                <button class="filter-btn" data-filter="scenery">Scenery</button>
+                <button class="filter-btn" data-filter="flowers">Flowers</button>
+                <button class="filter-btn" data-filter="games">Games</button>
+            </div>
+
+            <!-- Works Grid Minimalis -->
+            <div class="works-grid">
+                <!-- Animals works -->
+                <div class="project-item animals" data-caption="Wildlife photography showcasing the beauty of nature's creatures in their natural habitat. This project focuses on capturing the essence of wildlife through careful composition and natural lighting.">
+                    <div class="project-image">🐾</div>
+                    <div class="project-info">
+                        <div class="project-category">Animals</div>
+                        <div class="project-title">Wildlife Photography</div>
+                    </div>
+                </div>
+                <div class="project-item animals" data-caption="Professional pet portraits that capture the unique personality and character of beloved pets. Each portrait tells a story of companionship and love.">
+                    <div class="project-image">🐕</div>
+                    <div class="project-info">
+                        <div class="project-category">Animals</div>
+                        <div class="project-title">Pet Portraits</div>
+                    </div>
+                </div>
+
+                <!-- Scenery works -->
+                <div class="project-item scenery" data-caption="Breathtaking mountain landscapes captured during golden hour. This series explores the dramatic interplay of light and shadow across rugged terrain.">
+                    <div class="project-image">🏞️</div>
+                    <div class="project-info">
+                        <div class="project-category">Scenery</div>
+                        <div class="project-title">Mountain Landscape</div>
+                    </div>
+                </div>
+                <div class="project-item scenery" data-caption="Serene ocean views that capture the endless horizon and calming rhythm of waves. Perfect for meditation and relaxation themes.">
+                    <div class="project-image">🌊</div>
+                    <div class="project-info">
+                        <div class="project-category">Scenery</div>
+                        <div class="project-title">Ocean View</div>
+                    </div>
+                </div>
+
+                <!-- Flowers works -->
+                <div class="project-item flowers" data-caption="Vibrant spring blossoms showcasing the renewal of nature. This collection features macro photography of delicate flower petals and intricate details.">
+                    <div class="project-image">🌸</div>
+                    <div class="project-info">
+                        <div class="project-category">Flowers</div>
+                        <div class="project-title">Spring Blossoms</div>
+                    </div>
+                </div>
+                <div class="project-item flowers" data-caption="A comprehensive study of botanical garden specimens, highlighting the diversity and beauty of cultivated plant species from around the world.">
+                    <div class="project-image">🌺</div>
+                    <div class="project-info">
+                        <div class="project-category">Flowers</div>
+                        <div class="project-title">Botanical Garden</div>
+                    </div>
+                </div>
+
+                <!-- Games works -->
+                <div class="project-item games" data-caption="An immersive adventure quest game featuring puzzle-solving and exploration. Developed with Unity engine and featuring original artwork and sound design.">
+                    <div class="project-image">🎮</div>
+                    <div class="project-info">
+                        <div class="project-category">Games</div>
+                        <div class="project-title">Adventure Quest</div>
+                    </div>
+                </div>
+                <div class="project-item games" data-caption="A challenging puzzle game that tests logical thinking and problem-solving skills. Features multiple difficulty levels and progressive complexity.">
+                    <div class="project-image">🧩</div>
+                    <div class="project-info">
+                        <div class="project-category">Games</div>
+                        <div class="project-title">Puzzle Challenge</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section dengan Flex Cards -->
+    <section class="projects-section" id="projects">
+        <div class="projects-content">
+            <h2 class="section-title">My Projects</h2>
+            
+            <!-- Projects Flex Cards -->
+            <div class="projects-flex-cards">
+                <!-- Project Card 1 -->
+                <div class="project-card card-animals">
+                    <div class="project-card-image"></div>
+                    <div class="project-card-info">
+                        <div class="project-card-category">Animals</div>
+                        <h3 class="project-card-title">Wildlife Photography</h3>
+                        <p class="project-card-description">Wildlife photography showcasing the beauty of nature's creatures in their natural habitat. This project focuses on capturing the essence of wildlife through careful composition and natural lighting.</p>
+                        <div class="project-card-links">
+                            <a href="#" class="project-card-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="https://github.com/" target="_blank" class="project-card-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 2 -->
+                <div class="project-card card-scenery">
+                    <div class="project-card-image"></div>
+                    <div class="project-card-info">
+                        <div class="project-card-category">Scenery</div>
+                        <h3 class="project-card-title">Mountain Landscape</h3>
+                        <p class="project-card-description">Breathtaking mountain landscapes captured during golden hour. This series explores the dramatic interplay of light and shadow across rugged terrain and natural beauty.</p>
+                        <div class="project-card-links">
+                            <a href="#" class="project-card-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="https://github.com/" target="_blank" class="project-card-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 3 -->
+                <div class="project-card card-games">
+                    <div class="project-card-image"></div>
+                    <div class="project-card-info">
+                        <div class="project-card-category">Games</div>
+                        <h3 class="project-card-title">Adventure Quest</h3>
+                        <p class="project-card-description">An immersive adventure quest game featuring puzzle-solving and exploration. Developed with Unity engine and featuring original artwork and sound design.</p>
+                        <div class="project-card-links">
+                            <a href="#" class="project-card-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="https://github.com/" target="_blank" class="project-card-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll untuk navigasi
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+                
+                // Close mobile menu if open
+                if (mobileMenu.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+
+        // Efek scroll navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.98)';
+                navbar.style.padding = '0.8rem 2rem';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                navbar.style.padding = '1.2rem 2rem';
+            }
+        });
+
+        // Animasi teks saat load
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.hero-content > *');
+            elements.forEach((el, index) => {
+                el.style.animationDelay = `${0.1 + (index * 0.2)}s`;
+            });
+        });
+
+        // Burger Menu Functionality
+        const burgerMenu = document.getElementById('burgerMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function toggleMobileMenu() {
+            burgerMenu.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        burgerMenu.addEventListener('click', toggleMobileMenu);
+
+        // Filter Functionality for My Works
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectItems = document.querySelectorAll('.project-item');
+        const searchInput = document.getElementById('searchInput');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const filterValue = button.getAttribute('data-filter');
+                
+                projectItems.forEach(item => {
+                    if (filterValue === 'all' || item.classList.contains(filterValue)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search Functionality
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            projectItems.forEach(item => {
+                const title = item.querySelector('.project-title').textContent.toLowerCase();
+                const category = item.querySelector('.project-category').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || category.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Modal Functionality
+        const modal = document.getElementById('imageModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalImage = document.getElementById('modalImage');
+        const modalCategory = document.getElementById('modalCategory');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalCaption = document.getElementById('modalCaption');
+
+        // Open modal when project item is clicked
+        projectItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const category = item.querySelector('.project-category').textContent;
+                const title = item.querySelector('.project-title').textContent;
+                const caption = item.getAttribute('data-caption');
+                const imageContent = item.querySelector('.project-image').innerHTML;
+                
+                modalImage.innerHTML = imageContent;
+                modalCategory.textContent = category;
+                modalTitle.textContent = title;
+                modalCaption.textContent = caption;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal
+        modalClose.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
